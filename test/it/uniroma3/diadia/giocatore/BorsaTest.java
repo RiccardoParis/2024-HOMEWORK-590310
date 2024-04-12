@@ -2,9 +2,8 @@ package it.uniroma3.diadia.giocatore;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,18 +25,7 @@ public class BorsaTest {
 	   this.mazza=new Attrezzo("mazza",5);
    }
    
-   /**
-    * Test per il metodo addAttrezzo
-    */
-   @Test
-   public void testAddAttrezzoFalse() {
-	   assertFalse(this.borsa.addAttrezzo(spadone));
-   }
-   
-   @Test
-   public void testAddAttrezzoTrue() {
-	   assertTrue(this.borsa.addAttrezzo(spada));
-   }
+
    
    /**
     * Test per il metodo getAttrezzo

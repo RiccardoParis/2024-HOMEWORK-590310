@@ -1,5 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 
+
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Borsa {
@@ -36,6 +37,7 @@ public class Borsa {
 	public int getPesoMax() {
 		return pesoMax;
 	}
+	
 	
 	/**
 	 * Ritorna l'attrezzo,presente nella borsa,col nome inserito come parametro

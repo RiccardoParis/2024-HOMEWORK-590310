@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
+
 
 
 public class PartitaTest {
@@ -17,7 +19,8 @@ public class PartitaTest {
 	 */
 	@BeforeEach
 	public void SetUp() {
-		this.partita=new Partita();
+		Labirinto labirinto=new Labirinto();
+		this.partita=new Partita(labirinto);
 	}
 	
 	
@@ -27,7 +30,13 @@ public class PartitaTest {
 	 * Test per il metodo vinta
 	 */
 	@Test
-	public void testVintaFalse() {
+	public void testVinta_StanzaVincente() {
+		this.partita.setStanzaCorrente(this.partita.getLabirinto().getStanzaVincente());
+		assertTrue(this.partita.vinta());
+	}
+	
+	@Test
+	public void testVinta_InizioPartita() {
 		assertFalse(this.partita.vinta());
 	}
 	
@@ -35,18 +44,18 @@ public class PartitaTest {
 	 * Test per il metodo IsFinita
 	 */
 	@Test
-	public void testIsFinitaFalse() {
+	public void testIsFinita_PartitaInCorso() {
 		assertFalse(this.partita.isFinita());
 	}
 	
 	@Test
-	public void testIsFinitaCfu() {
+	public void testIsFinita_0Cfu() {
 		this.partita.getGiocatore().setCfu(0);
 		assertTrue(this.partita.isFinita());
 	}
 	
 	@Test
-	public void testIsFinitaTrue() {
+	public void testIsFinita_PartitaFinita() {
 		this.partita.setFinita();
 		assertTrue(this.partita.isFinita());
 	}

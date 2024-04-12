@@ -21,37 +21,20 @@ public class LabirintoTest {
 	 * Test per il metodo getStanzaVincente
 	 */
 	@Test
-	public void testStanzaVincenteNotNull() {
+	public void testStanzaVincente_Esiste() {
 		assertNotNull(this.labirinto.getStanzaVincente());
 	}
 	
 	@Test
-	public void testStanzaVincenteSbagliata(){
-		assertNotEquals("Atrio",this.labirinto.getStanzaVincente().getNome());
+	public void testStanzaVincente_StanzaIniziale(){
+		assertNotEquals(this.labirinto.getStanzaIniziale(),this.labirinto.getStanzaVincente().getNome());
 	}
 	
 	@Test
-	public void testStanzaVincenteCorretta() {
+	public void testStanzaVincente_StanzaVincente() {
 		assertEquals("Biblioteca",this.labirinto.getStanzaVincente().getNome());
 	}
 	
-	/**
-	 * Test per il metodo getStanzaCorrente
-	 */
-	@Test
-	public void testStanzaCorrenteNotNull() {
-		assertNotNull(this.labirinto.getStanzaCorrente());
-	}
-	
-	@Test
-	public void testStanzaCorrenteSbagliata(){
-		assertNotEquals("Aula N11",this.labirinto.getStanzaCorrente().getNome());
-	}
-	
-	@Test
-	public void testStanzaCorrenteCorretta() {
-		assertEquals("Atrio",this.labirinto.getStanzaCorrente().getNome());
-	}
 	
 
 }
