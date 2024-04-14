@@ -2,7 +2,7 @@ package it.uniroma3.diadia.giocatore;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,16 +13,16 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class BorsaTest {
    Borsa borsa;
-   Attrezzo spada;
-   Attrezzo spadone;
-   Attrezzo mazza;
+   Attrezzo attrezzo;
+   Attrezzo attrezzoPesante;
+   Attrezzo attrezzoSecondo;
+   
    
    @BeforeEach
    public void setUp() {
 	   this.borsa=new Borsa();
-	   this.spada=new Attrezzo("spada",4);
-	   this.spadone=new Attrezzo("spadone",11);
-	   this.mazza=new Attrezzo("mazza",5);
+	   this.attrezzo=new Attrezzo("attrezzo",1);
+	   this.attrezzoPesante=new Attrezzo("attrezzoPesante",11);
    }
    
 
@@ -31,20 +31,20 @@ public class BorsaTest {
     * Test per il metodo getAttrezzo
     */
    @Test
-   public void testGetAttrezzoGiusto(){
-	   this.borsa.addAttrezzo(spada);
-	   assertEquals(spada,this.borsa.getAttrezzo("spada"));
+   public void testGetAttrezzo_BorsaVuota(){
+	   assertNull(this.borsa.getAttrezzo("attrezzo"));
    }
    
    @Test
-   public void testGetAttrezzoBorsaVuota() {
-	   assertNull(this.borsa.getAttrezzo("spada"));
+   public void testGetAttrezzo_SingoloAttrezzo() {
+	   this.borsa.addAttrezzo(attrezzo);
+	   assertEquals(attrezzo,this.borsa.getAttrezzo("attrezzo"));
    }
    
    @Test
-   public void testGetAttrezzoSbagliato() {
-	   this.borsa.addAttrezzo(spada);
-	   assertNotEquals(spadone,this.borsa.getAttrezzo("spada"));
+   public void testGetAttrezzoPesante() {
+	   this.borsa.addAttrezzo(attrezzoPesante);
+	   assertNull(this.borsa.getAttrezzo("attrezzoPesante"));
    }
    
    /**
@@ -56,43 +56,41 @@ public class BorsaTest {
    }
    
    @Test
-   public void testGetPesoUnOggetto() {
-	   this.borsa.addAttrezzo(spada);
-	   assertEquals(4,this.borsa.getPeso());
+   public void testGetPeso_SingoloAttrezzo() {
+	   this.borsa.addAttrezzo(attrezzo);
+	   assertEquals(1,this.borsa.getPeso());
    }
    
    @Test
-   public void testGetPesoDueOggetti() {
-	   this.borsa.addAttrezzo(mazza);
-	   this.borsa.addAttrezzo(spada);
-	   assertEquals(9,this.borsa.getPeso());
+   public void testGetPeso_DueAttrezzi() {
+	   
+	   this.attrezzoSecondo=new Attrezzo("attrezzoSecondo",5);
+	   this.borsa.addAttrezzo(attrezzoSecondo);
+	   this.borsa.addAttrezzo(attrezzo);
+	   assertEquals(6,this.borsa.getPeso());
    }
    
    /**
     * Test per il metodo removeAttrezzo
     */
    @Test
-   public void testRemoveAttrezzoBorsaVuota() {
-	   assertNull(this.borsa.removeAttrezzo("spada"));
+   public void testRemoveAttrezzo_BorsaVuota() {
+	   assertNull(this.borsa.removeAttrezzo("attrezzo"));
    }
    
    @Test
-   public void testRemovePrimoAttrezzo() {
-	   this.borsa.addAttrezzo(spada);
-	   assertEquals(spada,this.borsa.removeAttrezzo("spada"));
+   public void testRemoveAttrezzo_SingoloAttrezzo() {
+	   this.borsa.addAttrezzo(attrezzo);
+	   assertEquals(attrezzo,this.borsa.removeAttrezzo("attrezzo"));
    }
    
    @Test
-   public void testRemoveUltimoAttrezzo() {
-	   this.borsa.addAttrezzo(spada);
-	   this.borsa.addAttrezzo(mazza);
-	   assertEquals(mazza,this.borsa.removeAttrezzo("mazza"));
+   public void testRemoveAttrezzo_UltimoAttrezzo() {
+	   this.borsa.addAttrezzo(attrezzo);
+	   this.attrezzoSecondo=new Attrezzo("attrezzoSecondo",5);
+	   this.borsa.addAttrezzo(attrezzoSecondo);
+	   assertEquals(attrezzoSecondo,this.borsa.removeAttrezzo("attrezzoSecondo"));
    }
    
-   @Test
-   public void testRemoveAttrezzoInesistente() {
-	   this.borsa.addAttrezzo(spada);
-	   assertNull(this.borsa.removeAttrezzo("mazza"));
-   }
 	
 }
