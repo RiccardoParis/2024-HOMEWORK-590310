@@ -23,7 +23,6 @@ public class Partita {
 	public Partita(Labirinto labirinto){
 		this.labirinto=labirinto;
 		this.giocatore=new Giocatore();
-		
 		this.finita = false;
 		this.stanzaCorrente=this.labirinto.getStanzaIniziale();
 	}
@@ -62,7 +61,7 @@ public class Partita {
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
-		return this.getStanzaCorrente()== this.labirinto.getStanzaVincente();
+		return this.stanzaCorrente== this.labirinto.getStanzaVincente();
 	}
 
 	/**

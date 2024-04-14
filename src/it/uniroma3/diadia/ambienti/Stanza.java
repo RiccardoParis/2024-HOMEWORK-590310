@@ -136,7 +136,9 @@ public class Stanza {
     	return risultato.toString();
     }
 
-    /**
+   
+
+	/**
 	* Controlla se un attrezzo esiste nella stanza (uguaglianza sul nome).
 	* @return true se l'attrezzo esiste nella stanza, false altrimenti.
 	*/
@@ -157,6 +159,8 @@ public class Stanza {
      * 		   null se l'attrezzo non e' presente.
 	 */
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
+		if(this.attrezzi[0]==null) return null;
+		
 		for (int i=0;i<this.numeroAttrezzi;i++) {
 			if (attrezzi[i].getNome().equals(nomeAttrezzo))
 				return attrezzi[i];
@@ -189,5 +193,16 @@ public class Stanza {
 	    	direzioni[i] = this.direzioni[i];
 	    return direzioni;
     }
+	
+	/**
+	 * Setters e getters
+	 */
+	 public int getNumeroAttrezzi() {
+			return numeroAttrezzi;
+		}
+
+		public void setNumeroAttrezzi(int numeroAttrezzi) {
+			this.numeroAttrezzi = numeroAttrezzi;
+		}
 
 }

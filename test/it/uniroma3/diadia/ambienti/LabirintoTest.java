@@ -27,7 +27,7 @@ public class LabirintoTest {
 	
 	@Test
 	public void testStanzaVincente_StanzaIniziale(){
-		assertNotEquals(this.labirinto.getStanzaIniziale(),this.labirinto.getStanzaVincente().getNome());
+		assertNotEquals(this.labirinto.getStanzaIniziale().getNome(),this.labirinto.getStanzaVincente().getNome());
 	}
 	
 	@Test
