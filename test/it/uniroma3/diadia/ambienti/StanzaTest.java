@@ -3,8 +3,6 @@ package it.uniroma3.diadia.ambienti;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaTest {
-	Stanza mensa;
-	Stanza bar;
-	Stanza ufficio;
-	Attrezzo osso;
-	Attrezzo lancia;
-	Attrezzo pistola;
+	Stanza stanza;
+	Stanza stanzaAdiacente;
+	Attrezzo attrezzo;
+	Attrezzo attrezzoInMezzo;
+	Attrezzo attrezzoUltimo;
+	
 	
 	/**
 	 * Creo due stanze connesse tra loro tramite il metodo impostaStanzaAdiacente
@@ -27,68 +25,54 @@ public class StanzaTest {
 	 */
 	@BeforeEach
 	public void setUp() {
-		this.mensa=new Stanza("mensa");
-		this.bar=new Stanza("bar");
-		this.ufficio=new Stanza("ufficio");
-		this.osso=new Attrezzo("osso",3);
-		this.lancia=new Attrezzo("lancia",2);
-		this.pistola=new Attrezzo("pistola",3);
-		
-		this.mensa.impostaStanzaAdiacente("nord", bar);
-		this.bar.impostaStanzaAdiacente("sud", mensa);
-		this.bar.addAttrezzo(osso);
+		this.stanza=new Stanza("stanza");
+		this.stanzaAdiacente=new Stanza("stanzaAdiacente");
+		this.attrezzo=new Attrezzo("attrezzo",1);
+		this.attrezzoInMezzo=new Attrezzo("attrezzoInMezzo",2);
+		this.attrezzoUltimo=new Attrezzo("attrezzoUltimo",3);
 	}
 	
 	/**
 	 * Test del metodo GetStanzaAdiacente
 	 */
 	@Test
-	public void testStanzaAdiacenteNotNull(){
-		assertNotNull(this.bar.getStanzaAdiacente("sud"));
+	public void testStanzaSenzaStanzeAdiacenti(){
+		assertNull(this.stanza.getStanzaAdiacente("sud"));
 	}
 
 	@Test
-	public void testGetStanzaAdiacente() {
-		assertEquals(bar,this.mensa.getStanzaAdiacente("nord"));
+	public void testSingolaStanzaAdiacente() {
+		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente);
+		assertEquals(stanzaAdiacente,this.stanza.getStanzaAdiacente("sud"));
 	}
 	
 	@Test
-	public void testGetNuovaStanzaAdiacente() {
-		this.mensa.impostaStanzaAdiacente("nord", ufficio);
-		assertEquals(ufficio,this.mensa.getStanzaAdiacente("nord"));
+	public void testGetStanzaAdiacente_DirezioneErrata() {
+		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente);
+		assertNull(this.stanza.getStanzaAdiacente("nord"));
 	}
 	
-	@Test
-	public void testStanzaAdiacenteNull() {
-		assertNull(this.bar.getStanzaAdiacente("est"));
-	}
 	
 	/**
 	 * Test del metodo getAttrezzo
 	 */
 	@Test
-	public void testGetAttrezzoSbagliato() {
-		assertNotEquals(osso,this.bar.getAttrezzo("spada"));
-	}
-	
-	@Test
 	public void testGetAttrezzoStanzaVuota() {
-		assertNull(this.mensa.getAttrezzo("osso"));
+		assertNull(this.stanza.getAttrezzo("attrezzo"));
 	}
 	
 	@Test
-	public void testGetAttrezzoGiusto() {
-		assertEquals(osso,this.bar.getAttrezzo("osso"));
-	}
+	public void testGetAttrezzo_SingoloAttrezzo() {
+		this.stanza.addAttrezzo(attrezzo);
+		assertEquals(attrezzo,this.stanza.getAttrezzo("attrezzo"));
+	}	
 	
 	@Test
-	public void testGetDopoRemoveAttrezzo() {
-		this.bar.addAttrezzo(lancia);
-		this.bar.addAttrezzo(pistola);
-		this.bar.removeAttrezzo("lancia");
-		assertEquals(pistola,this.bar.getAttrezzo("pistola"));
+	public void testStanzaPiena() {
+		this.stanza.setNumeroAttrezzi(10);
+		this.stanza.addAttrezzo(attrezzo);
+		assertNull(this.stanza.getAttrezzo("attrezzo"));
 	}
-	
 	
 	
 	
@@ -96,27 +80,32 @@ public class StanzaTest {
 	 * Test del metodo removeAttrezzo
 	 */
 	@Test 
-	public void testRemoveAttrezzoFalse() {
-		assertFalse(this.bar.removeAttrezzo("spada"));
+	public void testRemoveAttrezzo_StanzaVuota() {
+		assertFalse(this.stanza.removeAttrezzo("attrezzo"));
 	}
 	
 	@Test
-	public void testRemoveAttrezzoPrimo() {
-		assertTrue(this.bar.removeAttrezzo("osso"));
+	public void testRemoveAttrezzo_SingoloAttrezzo() {
+		this.stanza.addAttrezzo(attrezzo);
+		assertTrue(this.stanza.removeAttrezzo("attrezzo"));
 	}
 	
 	@Test
-	public void testRemoveAttrezzoUltimo() {
-		this.bar.addAttrezzo(lancia);
-		this.bar.addAttrezzo(pistola);
-		assertTrue(this.bar.removeAttrezzo("pistola"));
+	public void testRemoveAttrezzo_AttrezzoInMezzo() {
+		this.stanza.addAttrezzo(attrezzo);
+		this.stanza.addAttrezzo(attrezzoInMezzo);
+		this.stanza.addAttrezzo(attrezzoUltimo);
+		this.stanza.removeAttrezzo("attrezzoInMezzo");
+		assertNull(this.stanza.getAttrezzo("attrezzoInMezzo"));
 	}
 	
 	@Test
-	public void testRemoveAttrezzoAlCentro() {
-		this.bar.addAttrezzo(lancia);
-		this.bar.addAttrezzo(pistola);
-		assertTrue(this.bar.removeAttrezzo("lancia"));
+	public void testRemoveAttrezzo_AttrezzoUltimo() {
+		this.stanza.addAttrezzo(attrezzo);
+		this.stanza.addAttrezzo(attrezzoInMezzo);
+		this.stanza.addAttrezzo(attrezzoUltimo);
+		this.stanza.removeAttrezzo("attrezzoUltimo");
+		assertNull(this.stanza.getAttrezzo("attrezzoUltimo"));
 	}
 	
 	

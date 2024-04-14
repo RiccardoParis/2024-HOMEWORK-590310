@@ -11,6 +11,8 @@ public class GiocatoreTest {
          public void setUp() {
         	 this.giocatore=new Giocatore();
          }
+         
+         /*Non ci sono metodi particolari da testare*/
 	
 
 }
