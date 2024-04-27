@@ -100,6 +100,15 @@ public class StanzaTest {
 	}
 	
 	@Test
+	public void testRemoveAttrezzo_AttrezzoUltimoScalato() {
+		this.stanza.addAttrezzo(attrezzo);
+		this.stanza.addAttrezzo(attrezzoInMezzo);
+		this.stanza.addAttrezzo(attrezzoUltimo);
+		this.stanza.removeAttrezzo("attrezzoInMezzo");
+		assertEquals(attrezzoUltimo,this.stanza.getAttrezzo("attrezzoUltimo"));
+	}
+	
+	@Test
 	public void testRemoveAttrezzo_AttrezzoUltimo() {
 		this.stanza.addAttrezzo(attrezzo);
 		this.stanza.addAttrezzo(attrezzoInMezzo);
