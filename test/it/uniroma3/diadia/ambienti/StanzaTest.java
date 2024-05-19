@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
@@ -67,13 +68,56 @@ public class StanzaTest {
 		assertEquals(attrezzo,this.stanza.getAttrezzo("attrezzo"));
 	}	
 	
+	/**
+	 * Test getAttrezzi
+	 */
 	@Test
-	public void testStanzaPiena() {
-		this.stanza.setNumeroAttrezzi(10);
-		this.stanza.addAttrezzo(attrezzo);
-		assertNull(this.stanza.getAttrezzo("attrezzo"));
+	public void testGetAttrezzi_StanzaVuota() {
+		assertNull(this.stanza.getAttrezzi());
 	}
 	
+	@Test
+	public void testGetAttrezzi_SingoloAttrezzo() {
+		this.stanza.addAttrezzo(attrezzo);
+		assertEquals(List.of(attrezzo),this.stanza.getAttrezzi());
+	}
+	
+	@Test
+	public void testGetAttrezzi_DueAttrezzi() {
+		this.stanza.addAttrezzo(attrezzo);
+		this.stanza.addAttrezzo(attrezzoInMezzo);
+		assertEquals(List.of(attrezzo,attrezzoInMezzo),this.stanza.getAttrezzi());
+	}
+	
+	@Test
+	public void testGetAttrezzi_DueAttrezziUguali() {
+		this.stanza.addAttrezzo(attrezzo);
+		this.stanza.addAttrezzo(attrezzo);
+		assertEquals(List.of(attrezzo),this.stanza.getAttrezzi());
+	}
+	
+	/**
+	 * Test GetMapStanzeAdiacenti
+	 */
+	@Test
+	public void testGetMapStanzeAdiacenti_StanzaIsolata() {
+		assertNull(this.stanza.getMapStanzeAdiacenti());
+	}
+	
+	@Test
+	public void testGetMapStanzeAdiacenti_StanzaAdiacente() {
+		this.stanza.impostaStanzaAdiacente("nord", stanzaAdiacente);
+		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get("nord"));
+	}
+	
+	@Test
+	public void testGetMapStanzeAdiacenti_DueStanzeAdiacente() {
+		Stanza stanzaAdiacente_bis=new Stanza("Stanza Adiacente");
+		this.stanza.impostaStanzaAdiacente("nord", stanzaAdiacente);
+		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente_bis);
+		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get("nord"));
+		assertEquals(stanzaAdiacente_bis,this.stanza.getMapStanzeAdiacenti().get("sud"));
+	}
 	
 	
 	/**
@@ -116,6 +160,8 @@ public class StanzaTest {
 		this.stanza.removeAttrezzo("attrezzoUltimo");
 		assertNull(this.stanza.getAttrezzo("attrezzoUltimo"));
 	}
+	
+	
 	
 	
 	

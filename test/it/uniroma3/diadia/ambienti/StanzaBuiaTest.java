@@ -23,7 +23,7 @@ class StanzaBuiaTest {
 	@Test
 	public void testAttrezzoSbagliato() {
 		this.stanza.addAttrezzo(attrezzoSbagliato);
-		assertEquals("qui c'è buio pesto",this.stanza.getDescrizione());
+		assertEquals("qui c'è buio pesto, servirebbe posare qui una "+stanza.getAttrezzoNecessario()+" per vederci qualcosa",this.stanza.getDescrizione());
 		
 	}
 	

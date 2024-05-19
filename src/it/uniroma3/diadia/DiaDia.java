@@ -4,6 +4,7 @@ package it.uniroma3.diadia;
 
 
 import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 
@@ -42,6 +43,11 @@ public class DiaDia {
 	public DiaDia(IO console) {
 		this.console=console;
 		Labirinto labirinto=new Labirinto();
+		this.partita = new Partita(labirinto);
+	}
+	
+	public DiaDia(IO console,Labirinto labirinto) {
+		this.console=console;
 		this.partita = new Partita(labirinto);
 	}
 
@@ -112,7 +118,32 @@ public class DiaDia {
 
 	public static void main(String[] argc) {
 		IO io=new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		Labirinto labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("atrio")
+				.addStanzaVincente("biblioteca")
+				.addStanza("corridoio")
+				.addAttrezzo("chiave", 1)
+				.addAttrezzo("lanterna", 1)
+				.addStanzaBloccata("corridoio bloccato","nord","chiave")
+				.addStanzaMagica("stanza magica", 1)
+				.addStanzaBuia("stanza buia","lanterna")
+				.addStanza("Aula 1")
+				.addAdiacenza("atrio", "corridoio", "nord")
+				.addAdiacenza("corridoio", "atrio", "sud")
+				.addAdiacenza("corridoio", "corridoio bloccato", "nord")
+				.addAdiacenza("corridoio bloccato", "corridoio", "sud")
+				.addAdiacenza("corridoio bloccato", "Aula 1", "nord")
+				.addAdiacenza("Aula 1", "corridoio bloccato", "sud")
+				.addAdiacenza("Aula 1", "biblioteca","nord")
+				.addAdiacenza("biblioteca", "Aula 1", "sud")
+				.addAdiacenza("corridoio", "stanza magica", "est")
+				.addAdiacenza("stanza magica", "corridoio", "ovest")
+				.addAdiacenza("corridoio", "stanza buia", "ovest")
+				.addAdiacenza("stanza buia", "corridoio", "est")
+				.getLabirinto();
+		
+		
+		DiaDia gioco = new DiaDia(io,labirinto);
 		gioco.gioca();
 	}
 }

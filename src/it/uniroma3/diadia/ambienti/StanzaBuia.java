@@ -14,11 +14,19 @@ public class StanzaBuia extends Stanza{
      */
 	@Override
     public String getDescrizione() {
-		for(int i=0;i<super.getNumeroAttrezzi();i++) {
-			if(super.hasAttrezzo(this.attrezzoNecessario))
-				 return this.toString();
-		}
-       return "qui c'è buio pesto, servirebbe posare qui una "+this.attrezzoNecessario+" per vederci qualcosa";
-    }
+
+		if(super.hasAttrezzo(this.attrezzoNecessario))
+			return this.toString();
+		return "qui c'è buio pesto, servirebbe posare qui una "+this.attrezzoNecessario+" per vederci qualcosa";
+	}
+
+	public String getAttrezzoNecessario() {
+		return attrezzoNecessario;
+	}
+
+	public void setAttrezzoNecessario(String attrezzoNecessario) {
+		this.attrezzoNecessario = attrezzoNecessario;
+	}
+	
 
 }
