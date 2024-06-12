@@ -19,6 +19,13 @@ public class StanzaBuia extends Stanza{
 			return this.toString();
 		return "qui c'è buio pesto, servirebbe posare qui una "+this.attrezzoNecessario+" per vederci qualcosa";
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null) return false;
+		StanzaBuia that=(StanzaBuia) o;
+		return this.getNome().equals(that.getNome()) && this.getAttrezzoNecessario().equals(that.getAttrezzoNecessario());
+	}
 
 	public String getAttrezzoNecessario() {
 		return attrezzoNecessario;

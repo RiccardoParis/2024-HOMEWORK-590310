@@ -7,14 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
+
 
 
 public class LabirintoTest {
 	Labirinto labirinto;
+	LabirintoBuilder labirintoBuilder=LabirintoBuilder.newBuilder();
 	
 	@BeforeEach
 	public void setUp() {
-		this.labirinto=new Labirinto();
+		this.labirinto=labirintoBuilder.addStanzaIniziale("stanzaIniziale")
+				.addStanzaVincente("stanzaVincente")
+				.getLabirinto();
 	}
 
 	/**
@@ -32,7 +37,7 @@ public class LabirintoTest {
 	
 	@Test
 	public void testStanzaVincente_StanzaVincente() {
-		assertEquals("Biblioteca",this.labirinto.getStanzaVincente().getNome());
+		assertEquals("stanzaVincente",this.labirinto.getStanzaVincente().getNome());
 	}
 	
 	

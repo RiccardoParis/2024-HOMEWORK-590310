@@ -4,10 +4,14 @@ package it.uniroma3.diadia;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.FormatoFileNonValidoException;
 import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 
 
 
@@ -16,10 +20,14 @@ public class PartitaTest {
 	
 	/**
 	 * Inizializzo una partita
+	 * @throws FormatoFileNonValidoException 
+	 * @throws FileNotFoundException 
 	 */
 	@BeforeEach
-	public void SetUp() {
-		Labirinto labirinto=new Labirinto();
+	public void SetUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		Labirinto labirinto=LabirintoBuilder.newBuilder().addStanzaIniziale("stanzaIniziale")
+				.addStanzaVincente("stanzaVincente")
+				.getLabirinto();
 		this.partita=new Partita(labirinto);
 	}
 	

@@ -6,8 +6,9 @@ public interface FabbricaDiComandi {
 	 * Riceve una stringa istruzione e ritorna la classe Comando corrispondente
 	 * @param istruzione
 	 * @return
+	 * @throws Exception 
 	 */
-	public Comando costruisciComando(String istruzione);
+	public AbstractComando costruisciComando(String istruzione) throws Exception;
 	
 	public String getNome(String istruzione);
 	

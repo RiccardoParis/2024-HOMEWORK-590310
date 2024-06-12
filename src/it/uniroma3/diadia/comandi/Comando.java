@@ -30,6 +30,7 @@ public interface Comando {
 	public String getNome();
 	
 	public String getParametro();
+	
 
     /*private String nome;
     private String parametro;

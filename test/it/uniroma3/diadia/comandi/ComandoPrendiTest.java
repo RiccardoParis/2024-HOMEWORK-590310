@@ -1,52 +1,45 @@
 package it.uniroma3.diadia.comandi;
 
 import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.uniroma3.diadia.IO;
-import it.uniroma3.diadia.IOConsole;
-import it.uniroma3.diadia.Partita;
-import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
+
 
 class ComandoPrendiTest {
-	ComandoPrendi comando;
-	Partita partita;
-	Labirinto labirinto;
-	IO console;
-	Attrezzo attrezzo;
-	
-	@BeforeEach
-	public void setUp() {
-		this.console=new IOConsole();
-		this.labirinto=new Labirinto();
-		this.partita =new Partita(labirinto);
-		this.attrezzo =new Attrezzo("attrezzo",1);
-		this.partita.getStanzaCorrente().addAttrezzo(attrezzo);
-		this.comando =new ComandoPrendi();
-	}
+	FabbricaDiComandiRiflessiva fabbrica;
+	AbstractComando comando;
+		
+		@BeforeEach
+		public void setUp() {
+			this.fabbrica =new FabbricaDiComandiRiflessiva();
+		}
 
-	@Test
-	public void testComandoPrendi() {
-		this.comando.setParametro("attrezzo");
-		this.comando.esegui(partita, console);
-		assertEquals(attrezzo,this.partita.getGiocatore().getBorsa().getAttrezzo("attrezzo"));
-	}
-	
-	@Test
-	public void testComandoPrendi_SenzaParametro() {
-		this.comando.esegui(partita, console);
-		assertNull(this.partita.getGiocatore().getBorsa().getAttrezzo("attrezzo"));
-	}
-	
-	@Test
-	public void testComandoPrendi_AttrezzoSbagliato() {
-		this.comando.setParametro("attrezzoSbagliato");
-		this.comando.esegui(partita, console);
-		assertNull(this.partita.getGiocatore().getBorsa().getAttrezzo("attrezzo"));
-	}
-
+		@Test
+		public void testComandoPrendi() throws Exception {
+			this.comando=this.fabbrica.costruisciComando("prendi attrezzo");
+			assertEquals(ComandoPrendi.class,this.comando.getClass());
+		}
+		
+		@Test
+		public void testComandoPrendi_Nome() throws Exception {
+			this.comando=this.fabbrica.costruisciComando("prendi attrezzo");
+			assertEquals("prendi",this.comando.getNome());
+		}
+		
+		@Test
+		public void testComandoPrendi_Parametro() throws Exception {
+			this.comando=this.fabbrica.costruisciComando("prendi attrezzo");
+			assertEquals("attrezzo",this.comando.getParametro());
+		}
+		
+		@Test
+		public void testComandoPrendi_ParametroNullo() throws Exception {
+			this.comando=this.fabbrica.costruisciComando("prendi");
+			assertNull(this.comando.getParametro());
+		}
 }

@@ -43,6 +43,10 @@ public class Attrezzo implements Comparable<Attrezzo> {
 		return this.peso;
 	}
 	
+	public void setPeso(int peso) {
+		this.peso=peso;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		Attrezzo that=(Attrezzo) obj;

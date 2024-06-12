@@ -1,0 +1,11 @@
+Stanze: biblioteca,atrio,mensa,corridoio
+StanzeBuie: bagno lanterna
+StanzeBloccate: aulaCampus NORD chiave
+StanzeMagiche: N11 2
+Inizio: atrio
+Vincente: biblioteca
+Attrezzi: chiave 1 corridoio,lanterna 2 corridoio,osso 2 atrio
+Maghi: merlino piacere gioiello 1 mensa
+Streghe: sabrina hihihihi atrio
+Cani: fido baubau osso chiave 2 aulaCampus
+Uscite: mensa EST atrio,atrio OVEST mensa,atrio NORD corridoio,corridoio SUD atrio,corridoio NORD aulaCampus,aulaCampus SUD corridoio,aulaCampus NORD N11,N11 SUD aulaCampus,N11 NORD biblioteca,biblioteca SUD N11,corridoio EST bagno,bagno OVEST corridoio

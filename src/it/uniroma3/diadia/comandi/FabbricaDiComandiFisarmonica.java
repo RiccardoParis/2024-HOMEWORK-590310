@@ -3,12 +3,12 @@ package it.uniroma3.diadia.comandi;
 import java.util.Scanner;
 
 public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi{
-	public Comando costruisciComando(String istruzione) {
+	/*public Comando costruisciComando(String istruzione) {
 		@SuppressWarnings("resource")
 		Scanner scannerDiParole = new Scanner(istruzione);
 		String nomeComando = null;
 		String parametro = null;
-		Comando comando = null;
+		AbstractComando comando = null;
 		if (scannerDiParole.hasNext())
 			nomeComando = scannerDiParole.next(); // prima parola: nome del comando
 		if (scannerDiParole.hasNext())
@@ -30,7 +30,7 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi{
 		else comando = new ComandoNonValido();
 		comando.setParametro(parametro);
 		return comando;
-	}
+	}*/
 
 	@Override
 	public String getNome(String istruzione) {
@@ -55,6 +55,14 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi{
 			parametro = scannerDiParole.next();
 		return parametro;
 	}
+
+	@Override
+	public AbstractComando costruisciComando(String istruzione) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 	
 

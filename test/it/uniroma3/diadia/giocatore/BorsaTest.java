@@ -3,6 +3,7 @@ package it.uniroma3.diadia.giocatore;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.FormatoFileNonValidoException;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 
@@ -24,7 +26,7 @@ public class BorsaTest {
    
    
    @BeforeEach
-   public void setUp() {
+   public void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
 	   this.borsa=new Borsa();
 	   this.attrezzo=new Attrezzo("attrezzo",1);
 	   this.attrezzoStessoPeso= new Attrezzo("attrezzoStessoPeso",1);

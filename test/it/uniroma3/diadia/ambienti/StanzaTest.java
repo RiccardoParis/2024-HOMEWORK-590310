@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,24 +35,52 @@ public class StanzaTest {
 		this.attrezzoUltimo=new Attrezzo("attrezzoUltimo",3);
 	}
 	
+	@Test
+	public void testOrdinamento_Singleton(){
+		this.stanza.impostaStanzaAdiacente(Direzione.NORD, stanzaAdiacente);
+		LinkedList<Stanza> ordinati=new LinkedList<>(this.stanza.getMapStanzeAdiacenti().values());
+		assertEquals(1,ordinati.size());
+	}
+	
+	@Test
+	public void testOrdinamento_DueAdiacenze_StessoNumeroAttrezzi(){
+		this.stanza.impostaStanzaAdiacente(Direzione.SUD, new Stanza("Adiacenza"));
+		this.stanza.impostaStanzaAdiacente(Direzione.NORD, stanzaAdiacente);
+		LinkedList<Stanza> ordinati=new LinkedList<>(this.stanza.getMapStanzeAdiacenti().values());
+		assertEquals(2,ordinati.size());
+	}
+	
+	@Test
+	public void testOrdinamento_DueAdiacenze_DiversoNumeroAttrezzi(){
+		
+		this.stanza.impostaStanzaAdiacente(Direzione.NORD, stanzaAdiacente);
+		this.stanza.impostaStanzaAdiacente(Direzione.SUD, new Stanza("Adiacenza"));
+		this.stanzaAdiacente.addAttrezzo(attrezzo);
+		ComparatoreStanzaPerAttrezzi cmp=new ComparatoreStanzaPerAttrezzi();
+		LinkedList<Stanza> ordinati=new LinkedList<>(this.stanza.getMapStanzeAdiacenti().values());
+		Collections.sort(ordinati,cmp);
+		assertEquals(new Stanza("Adiacenza"),ordinati.getFirst());
+		assertEquals(stanzaAdiacente,ordinati.getLast());
+	}
+	
 	/**
 	 * Test del metodo GetStanzaAdiacente
 	 */
 	@Test
 	public void testStanzaSenzaStanzeAdiacenti(){
-		assertNull(this.stanza.getStanzaAdiacente("sud"));
+		assertNull(this.stanza.getStanzaAdiacente(Direzione.SUD));
 	}
 
 	@Test
 	public void testSingolaStanzaAdiacente() {
-		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente);
-		assertEquals(stanzaAdiacente,this.stanza.getStanzaAdiacente("sud"));
+		this.stanza.impostaStanzaAdiacente(Direzione.SUD, stanzaAdiacente);
+		assertEquals(stanzaAdiacente,this.stanza.getStanzaAdiacente(Direzione.SUD));
 	}
 	
 	@Test
 	public void testGetStanzaAdiacente_DirezioneErrata() {
-		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente);
-		assertNull(this.stanza.getStanzaAdiacente("nord"));
+		this.stanza.impostaStanzaAdiacente(Direzione.SUD, stanzaAdiacente);
+		assertNull(this.stanza.getStanzaAdiacente(Direzione.NORD));
 	}
 	
 	
@@ -106,17 +136,17 @@ public class StanzaTest {
 	
 	@Test
 	public void testGetMapStanzeAdiacenti_StanzaAdiacente() {
-		this.stanza.impostaStanzaAdiacente("nord", stanzaAdiacente);
-		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get("nord"));
+		this.stanza.impostaStanzaAdiacente(Direzione.NORD, stanzaAdiacente);
+		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get(Direzione.NORD));
 	}
 	
 	@Test
 	public void testGetMapStanzeAdiacenti_DueStanzeAdiacente() {
 		Stanza stanzaAdiacente_bis=new Stanza("Stanza Adiacente");
-		this.stanza.impostaStanzaAdiacente("nord", stanzaAdiacente);
-		this.stanza.impostaStanzaAdiacente("sud", stanzaAdiacente_bis);
-		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get("nord"));
-		assertEquals(stanzaAdiacente_bis,this.stanza.getMapStanzeAdiacenti().get("sud"));
+		this.stanza.impostaStanzaAdiacente(Direzione.NORD, stanzaAdiacente);
+		this.stanza.impostaStanzaAdiacente(Direzione.SUD, stanzaAdiacente_bis);
+		assertEquals(stanzaAdiacente,this.stanza.getMapStanzeAdiacenti().get(Direzione.NORD));
+		assertEquals(stanzaAdiacente_bis,this.stanza.getMapStanzeAdiacenti().get(Direzione.SUD));
 	}
 	
 	
